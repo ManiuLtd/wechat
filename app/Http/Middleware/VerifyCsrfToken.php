@@ -13,6 +13,6 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         'user','user/doLogin','order','admin/merchant/ajax_agents','api/wxapi/index','api/wxapi/menu','api/buy','api/batchBuy','api/orderBuy',
-        'admin/agent/ajax_products','api/lxBuy',
+        'admin/agent/ajax_products','api/lxBuy','wechat'
     ];
 }
