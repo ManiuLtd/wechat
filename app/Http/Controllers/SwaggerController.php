@@ -10,7 +10,7 @@ use App\Http\Requests;
 /**
  * @SWG\Swagger(
  *     schemes={"http","https"},
- *     host="192.168.199.136:8000/api",
+ *     host="localhost:8000/api",
  *     basePath="/",
  *     @SWG\Info(
  *         version="1.0",

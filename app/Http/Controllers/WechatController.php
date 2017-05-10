@@ -11,16 +11,8 @@ class WechatController extends Controller
 {
     public function index()
     {
-        $options = [
-            'debug' => true,
-            'app_id' => config('wechat.app_id'),
-            'secret' => config('wechat.secret'),
-            'token' => config('wechat.token'),
-            'log' => [
-                'level' => 'debug',
-                'file' => '/tmp/easywechat.log',
-            ],
-        ];
+
+        $options = weOption();
 
         $app = new Application($options);
 
@@ -29,10 +21,14 @@ class WechatController extends Controller
         $server->setMessageHandler(function($message){
             switch ($message->MsgType) {
                 case 'event':
-                    return '收到事件消息';
+                    if($message->Event == 'subscribe'){
+                        return '欢迎观注小莫公众号';
+                    }else{
+                        return '收到事件消息';
+                    }
                     break;
                 case 'text':
-                    return '收到文字消息';
+                    return $message->Content;
                     break;
                 case 'image':
                     return '收到图片消息';
@@ -60,4 +56,30 @@ class WechatController extends Controller
 
         return $response;
     }
+
+    public function oauth_callback()
+    {
+        $options = weOption();
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        $user = $oauth->user();
+        $userinfo = $user->toJson();
+
+        setcookie("userinfo", $userinfo,time()+3600,'/','ana51.com');
+
+        return view('oauth_callbake');
+
+    }
+
+    public function oauth(Request $request)
+    {
+        if($request->url){
+            setcookie("url", $request->url,time()+3600,'/','ana51.com');
+        }
+        $options = weOption();
+        $app = new Application($options);
+        return $response = $app->oauth->scopes(['snsapi_userinfo'])->redirect();
+    }
+
+
 }

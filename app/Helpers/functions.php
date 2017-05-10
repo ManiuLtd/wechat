@@ -124,7 +124,7 @@
 	    $new_access_token_json = https_request($new_access_token_url);
 		$new_access_token_array = json_decode($new_access_token_json, true);
 		$new_access_token = $new_access_token_array['access_token'];
-	    
+
 	    //全局access token获得用户基本信息
 	    $userinfo_url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$new_access_token&openid=$openid";
 		$userinfo_json = https_request($userinfo_url);
@@ -164,7 +164,23 @@
 
 
 
-
+	function weOption()
+	{
+		return [
+			'debug' => true,
+			'app_id' => config('wechat.app_id'),
+			'secret' => config('wechat.secret'),
+			'token' => config('wechat.token'),
+			'oauth' => [
+				'scopes'   => ['snsapi_userinfo'],
+				'callback' => 'oauth_callback',
+			],
+			'log' => [
+				'level' => 'debug',
+				'file' => '/tmp/easywechat.log',
+			],
+		];
+	}
 
 
 

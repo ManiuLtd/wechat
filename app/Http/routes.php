@@ -12,7 +12,10 @@ Route::group(['namespace'=>'Pchome'],function(){
 
 //wechat测试
 Route::any('/wechat','WechatController@index');
+Route::any('/oauth_callback','WechatController@oauth_callback');
+Route::any('/oauth','WechatController@oauth');
 
+Route::get('/test','WechatController@test');
 
 Route::get('/demo','DemoController@index');
 
@@ -153,7 +156,7 @@ Route::get('/login',[
 Route::post('/doLogin','Admin\LoginController@doLogin');
 
 
-Route::any('oauth','WxController@oauth');
+//Route::any('oauth','WxController@oauth');
 
 
 ### api
@@ -190,14 +193,26 @@ $api->version('v1', function ($api) {
             //获取短信
             $api->get('/getSmsCode','CommonController@getSmsCode');  
 
-            $api->any('/wxapi/index','WxController@index');  
-            $api->any('/wxapi/auth','WxController@auth');  
-            $api->any('/wxapi/menu','WxController@menu');  
+
             $api->get('/product/getProductsByAgent','ProductController@getProductsByAgent');  #根据代理商id获取流量包
             $api->get('/product/getProductsByAgentName','ProductController@getProductsByAgentName');  #根据代理商名字获取流量包
             $api->post('/buy','UserController@buy');   
-            $api->get('/personorders','UserController@personorders');   
-        });
+            $api->get('/personorders','UserController@personorders');
+
+			//微信相关
+			$api->any('/wxapi/index','WxController@index'); //验证
+			$api->any('/wxapi/auth','WxController@auth');
+			$api->any('/wxapi/getMenu','WxController@getMenu');  //获取菜单
+			$api->any('/wxapi/setMenu','WxController@setMenu');  //设置菜单
+			$api->any('/wxapi/getUser','WxController@getUser');  //获取用户
+			$api->any('/wxapi/getUserList','WxController@getUserList');  //获取用户列表
+			$api->any('/wxapi/setRemark','WxController@setRemark');  //设置用户备注
+			$api->any('/wxapi/getUserGroupId','WxController@getUserGroupId');  //获取用户分组id
+			$api->any('/wxapi/blacklist','WxController@blacklist');  //获取黑名单
+
+
+
+		});
         
     });
 });
