@@ -12,20 +12,20 @@ use App\Http\Requests\updateAdminRequest;
 
 class AdminController extends Controller
 {
- 
+
     public function index()
-    {     
-        $admins = Admin::orderBy('id','desc')->paginate(7);
-        return view('admin.admin.index',compact('admins'));
+    {
+        $admins = Admin::orderBy('id', 'desc')->paginate(7);
+        return view('admin.admin.index', compact('admins'));
     }
 
-   
+
     public function create()
     {
         return view('admin.admin.create');
     }
 
-  
+
     public function store(storeAdminRequest $request)
     {
         Admin::create([
@@ -37,7 +37,7 @@ class AdminController extends Controller
         return redirect()->back()->with('status', '添加成功');
     }
 
-  
+
     public function show($id)
     {
         //
@@ -45,12 +45,12 @@ class AdminController extends Controller
 
 
     public function edit($id)
-    {   
+    {
         $admin = Admin::findOrFail($id);
-        return view('admin.admin.edit',compact('admin'));
+        return view('admin.admin.edit', compact('admin'));
     }
 
-   
+
     public function update(updateAdminRequest $request, $id)
     {
         $admin = Admin::findOrFail($id);
@@ -59,7 +59,7 @@ class AdminController extends Controller
 
         $pwd = $request->password;
         $repwd = $request->password_confirmation;
-        if(($pwd == $repwd) && ($pwd && $repwd)){
+        if (($pwd == $repwd) && ($pwd && $repwd)) {
             $admin->password = $request->password;
         }
 
@@ -67,7 +67,7 @@ class AdminController extends Controller
         return redirect()->back()->with('status', '保存成功');
     }
 
- 
+
     public function destroy($id)
     {
         Admin::destroy($id);
@@ -79,7 +79,7 @@ class AdminController extends Controller
         $admin = Admin::findOrFail($id);
 
         $status = ($admin->status == '正常') ? '1' : '0';
-      
+
         $admin->status = $status;
         $admin->save();
         return Redirect::back();
