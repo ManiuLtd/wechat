@@ -1,0 +1,52 @@
+<?php
+
+$broker = 'tcp://182.92.122.165:61613';
+$queue  = '/queue/redis';
+
+try {
+    $stomp = new Stomp($broker,'xiaomo');
+
+    $stomp->subscribe($queue); //订阅主站消息
+	while(true){
+		if($stomp->hasFrame()){
+			$frame = $stomp->readFrame();  #循环读取每条消息
+			$user = $frame->body; #获取消息内容
+			echo $user; #换成自己的处理方式
+			sendCode();
+			$stomp->ack($frame); #代码这条消息已经处理
+		}
+	}
+} catch(StompException $e) {
+    echo $e->getMessage();
+}
+
+function sendCode(){
+	$ch = curl_init(); 
+
+    $url = 'https://sms.yunpian.com/v1/sms/send.json'; 
+    curl_setopt($ch, CURLOPT_URL, $url); 
+
+    $mobile = '13636607175';
+    $paramArr = array(
+        'apikey' => '0040f2d02e13f81c5710a92a2d229bdd',
+        'mobile' => $mobile,
+        'text' => '【欢乐诵】您的验证码是'.'0000';
+    );
+    $param = '';
+    foreach ($paramArr as $key => $value) {
+        $param .= urlencode($key).'='.urlencode($value).'&';
+    }
+    $param = substr($param, 0, strlen($param)-1);
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //不验证证书下同
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+    $output = curl_exec($ch); 
+
+    curl_close($ch); 
+}
+ 		
+?>
