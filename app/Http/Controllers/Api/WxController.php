@@ -404,7 +404,7 @@ class WxController extends Controller
         $baseInfo = [
             'logo_url' => 'http://mmbiz.qpic.cn/mmbiz/2aJY6aCPatSeibYAyy7yct9zJXL9WsNVL4JdkTbBr184gNWS6nibcA75Hia9CqxicsqjYiaw2xuxYZiaibkmORS2oovdg/0',
             'brand_name' => '量炫未来',
-            'code_type' => 'CODE_TYPE_QRCODE',
+            'code_type' => 'CODE_TYPE_TEXT',
             'title' => '江苏电信流量7折券',
             'sub_title' => '仅限江苏电信',
             'color' => 'Color010',
@@ -420,9 +420,6 @@ class WxController extends Controller
             ],
             "center_title" => "立即使用",
             "center_url" => "www.qq.com",
-            "promotion_url_name" => "更多折扣券",
-            "promotion_url" => "http://www.qq.com",
-            "source" => "大众点评"
 
         ];
         $especial = [
@@ -523,9 +520,9 @@ class WxController extends Controller
 
         $card = $app->card;
 
-        // by openid
-        $openids = ['ogNetv9w2iFYz_4Anhg9ddxbqRD4'];
-        $result = $card->setTestWhitelist($openids);
+        $usernames = ['o0a3GwxicRXcsX4EDVF25yG-3_sg'];
+        $result = $card->setTestWhitelistByUsername($usernames);
+
 
         return ['status' => $result];
 
