@@ -365,7 +365,7 @@
                                 <li>
                                     <a href="#">
                                         <i class="demo-psi-repair"></i>
-                                        <span class="menu-title">用户管理</span>
+                                        <span class="menu-title">企业用户管理</span>
                                         <i class="arrow"></i>
                                     </a>
 
@@ -378,13 +378,13 @@
                                 <li>
                                     <a href="#">
                                         <i class="demo-psi-repair"></i>
-                                        <span class="menu-title">banner管理</span>
+                                        <span class="menu-title">广告管理</span>
                                         <i class="arrow"></i>
                                     </a>
 
                                     <!--Submenu-->
                                     <ul class="collapse @if(in_array(Route::currentRouteName(),['admin.banner.index','admin.banner.create','admin.banner.edit']))  in   @endif">
-                                        <li>{{ link_to_route('admin.banner.index','banner管理')}}</li>
+                                        <li>{{ link_to_route('admin.banner.index','广告列表')}}</li>
                                     </ul>
                                 </li>
 
@@ -404,26 +404,26 @@
                                 <li>
                                     <a href="#">
                                         <i class="demo-psi-repair"></i>
-                                        <span class="menu-title">代理商管理</span>
+                                        <span class="menu-title">省级运营商管理</span>
                                         <i class="arrow"></i>
                                     </a>
 
                                     <!--Submenu-->
                                     <ul class="collapse @if(in_array(Route::currentRouteName(),['admin.merchant.index','admin.merchant.create','admin.merchant.edit']))  in   @endif">
-                                        <li>{{ link_to_route('admin.agent.index','代理商列表')}}</li>
+                                        <li>{{ link_to_route('admin.agent.index','省级运营商列表')}}</li>
                                     </ul>
                                 </li>
 
                                 <li>
                                     <a href="#">
                                         <i class="demo-psi-repair"></i>
-                                        <span class="menu-title">产品管理</span>
+                                        <span class="menu-title">流量产品管理</span>
                                         <i class="arrow"></i>
                                     </a>
 
                                     <!--Submenu-->
                                     <ul class="collapse @if(in_array(Route::currentRouteName(),['admin.product.index','admin.product.create','admin.product.edit']))  in   @endif">
-                                        <li>{{ link_to_route('admin.product.index','产品列表')}}</li>
+                                        <li>{{ link_to_route('admin.product.index','流量产品列表')}}</li>
                                     </ul>
                                 </li>
 

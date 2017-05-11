@@ -46,7 +46,7 @@
                             <td>{{$merchant->name}}</td>
                             <td>
                                 {{ link_to_route('admin.merchant.edit', '编辑', $parameters = ['id'=>$merchant->id], $attributes = ['class'=>'btn btn-info btn-sm']) }}
-                                {{ link_to_route('admin.merchant.agents', '查看代理商', $parameters = ['id'=>$merchant->id], $attributes = ['class'=>'btn btn-primary btn-sm']) }}
+                                {{ link_to_route('admin.merchant.agents', '省级运营商', $parameters = ['id'=>$merchant->id], $attributes = ['class'=>'btn btn-primary btn-sm']) }}
                                  @include('admin/merchant/_deleteForm')
                             </td>
                           </tr>

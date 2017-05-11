@@ -11,7 +11,7 @@
        @include('errors._error')
         
         <div class="form-group">
-            {!! Form::label('name','产品名称',['class'=>'col-sm-3 control-label']) !!}
+            {!! Form::label('name','流量产品名称',['class'=>'col-sm-3 control-label']) !!}
             <div class="col-sm-6">
             	{!! Form::text('name', null ,['class'=>'form-control']) !!}
             </div>

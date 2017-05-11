@@ -2,16 +2,16 @@
 
 
 @section('btitle')
-	产品管理
+	流量产品列表
 @endsection
 
 @section('bread')
-	{{link_to_route('admin.admin.index','首页')}} / {{link_to_route('admin.product.index','产品列表')}} / 添加产品
+	{{link_to_route('admin.admin.index','首页')}} / {{link_to_route('admin.product.index','产品列表')}} / 添加流量产品
 @endsection
 
 
 @section('title')
-	添加产品
+	添加流量产品
 @endsection
 
 

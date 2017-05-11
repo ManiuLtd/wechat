@@ -65,9 +65,11 @@ class WechatController extends Controller
         $user = $oauth->user();
         $userinfo = $user->toJson();
 
+        if (isset($_COOKIE["url"])){
+           $url = $_COOKIE['url'];
+        }
         setcookie("userinfo", $userinfo,time()+3600,'/','ana51.com');
-
-        return view('oauth_callbake');
+        return redirect($url);
 
     }
 
@@ -75,10 +77,18 @@ class WechatController extends Controller
     {
         if($request->url){
             setcookie("url", $request->url,time()+3600,'/','ana51.com');
+        }else{
+            echo '请输入url';
+            return false;
         }
         $options = weOption();
         $app = new Application($options);
         return $response = $app->oauth->scopes(['snsapi_userinfo'])->redirect();
+    }
+
+    public function test()
+    {
+        return redirect('http://www.baidu.com');
     }
 
 

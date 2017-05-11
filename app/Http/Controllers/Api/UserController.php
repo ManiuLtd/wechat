@@ -141,82 +141,6 @@ class UserController extends BaseController
         return response()->json($res);
     }
 
-
-    
-     /**
-     * @SWG\Get(path="/getToken",
-     *   tags={"用户"},
-     *   summary="获得token",
-     *   description="",
-     *   operationId="loginUser",
-     *   produces={"application/xml", "application/json"},
-     *   @SWG\Response(
-     *     response=200,
-     *     description="successful operation",
-     *     @SWG\Schema(type="json"),
-     *     @SWG\Header(
-     *       header="X-Rate-Limit",
-     *       type="integer",
-     *       format="int32",
-     *       description="calls per hour allowed by the user"
-     *     ),
-     *     @SWG\Header(
-     *       header="X-Expires-After",
-     *       type="string",
-     *       format="date-time",
-     *       description="date in UTC when token expires"
-     *     )
-     *   )
-     * )
-     */
-    public function getToken()
-    {
-        $token = createToken(6);
-        return $this->response->array(compact('token'));
-    }
-
-
-    /**
-     * @SWG\Get(path="/checkToken",
-     *   tags={"用户"},
-     *   summary="检测token是否有效",
-     *   description="",
-     *   operationId="loginUser",
-     *   produces={"application/xml", "application/json"},
-     *  @SWG\Parameter(
-     *     name="token",
-     *     in="query",
-     *     description="token",
-     *     required=true,
-     *     type="string"
-     *   ),
-     *   @SWG\Response(
-     *     response=200,
-     *     description="successful operation",
-     *     @SWG\Schema(type="json"),
-     *     @SWG\Header(
-     *       header="X-Rate-Limit",
-     *       type="integer",
-     *       format="int32",
-     *       description="calls per hour allowed by the user"
-     *     ),
-     *     @SWG\Header(
-     *       header="X-Expires-After",
-     *       type="string",
-     *       format="date-time",
-     *       description="date in UTC when token expires"
-     *     )
-     *   )
-     * )
-     */
-    public function checkToken(Request $request)
-    {   
-       $token = $request->token;
-       $info = checkToken($token);
-       return $this->response->array(compact('info'));
-    }
-
-
      /**
      * @SWG\Post(path="/buy",
      *   tags={"用户"},
@@ -283,7 +207,7 @@ class UserController extends BaseController
     /**
      * @SWG\Get(path="/personorders",
      *   tags={"用户"},
-     *   summary="根据token获取ToC订单",
+     *   summary="根据openid获取ToC订单",
      *   description="",
      *   operationId="loginUser",
      *   produces={"application/xml", "application/json"},

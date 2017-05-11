@@ -1,16 +1,16 @@
 @extends("layouts.admin")
 
 @section('btitle')
-    产品管理
+    流量产品管理
 @endsection
 
 
 @section('bread')
-    {{link_to_route('admin.product.index','首页')}} / {{link_to_route('admin.product.index','产品列表')}} 
+    {{link_to_route('admin.product.index','首页')}} / {{link_to_route('admin.product.index','流量产品列表')}} 
 @endsection
 
 @section('title')
-    产品列表
+    流量产品列表
 @endsection
 
 @section('content')
