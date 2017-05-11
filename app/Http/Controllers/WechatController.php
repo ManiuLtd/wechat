@@ -63,12 +63,14 @@ class WechatController extends Controller
         $app = new Application($options);
         $oauth = $app->oauth;
         $user = $oauth->user();
-        
+
         $userinfo = $user->toJson();
 
         if (isset($_COOKIE["url"])){
            $url = $_COOKIE['url'];
         }
+
+        dd($url);
         setcookie("userinfo", $userinfo,time()+3600,'/','ana51.com');
         return redirect($url);
 
