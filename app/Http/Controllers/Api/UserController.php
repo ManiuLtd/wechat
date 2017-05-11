@@ -256,7 +256,7 @@ class UserController extends BaseController
        //改为根据openid获取 
        $user = User::where('openid',$request->openid)->first();
        $porders = Personorder::where('user_id',$user->id)->orderBy('id','desc')->paginate($request->per_page);
-        return ['a'=>'b'];
+        return ['a'=>$porders];
        return $this->response->paginator($porders,new PersonordersTransformer);
     }
 
