@@ -107,44 +107,7 @@
 		return $data;
 	}
 
-	#获取用户信息
-	function getUserInfo($code)
-	{
-		$appid = "wx8a1874c6220e55ea";
-		$appsecret = "47a1ad098864867d27e1d7172f5972b6";
 
-	    //oauth2的方式获得openid
-		$access_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
-		$access_token_json = https_request($access_token_url);
-		$access_token_array = json_decode($access_token_json, true);
-		$openid = $access_token_array['openid'];
-
-	    //非oauth2的方式获得全局access token
-	    $new_access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
-	    $new_access_token_json = https_request($new_access_token_url);
-		$new_access_token_array = json_decode($new_access_token_json, true);
-		$new_access_token = $new_access_token_array['access_token'];
-
-	    //全局access token获得用户基本信息
-	    $userinfo_url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$new_access_token&openid=$openid";
-		$userinfo_json = https_request($userinfo_url);
-		$userinfo_array = json_decode($userinfo_json, true);
-		return $userinfo_array;
-	}
-
-	//获取微笑openid
-	function getOpenid($code)
-	{
-		$appid = "wx8a1874c6220e55ea";
-		$appsecret = "47a1ad098864867d27e1d7172f5972b6";
-
-	    //oauth2的方式获得openid
-		$access_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
-		$access_token_json = https_request($access_token_url);
-		$access_token_array = json_decode($access_token_json, true);
-		$openid = $access_token_array['openid'];
-		return  $openid;
-	}
 
 	//七牛云 upToken
 	function generateUpToken()

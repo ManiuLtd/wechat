@@ -197,8 +197,6 @@ $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Api'], function ($api) {
         $api->group(['middleware'=>['api.cors']], function ($api) {
 
-
-
 			//用户相关
 			$api->get('/register','UserController@register'); 		#企业用户注册
 			$api->get('/login','UserController@login'); 			#企业用户登录
@@ -208,12 +206,9 @@ $api->version('v1', function ($api) {
             $api->get('/orders','UserController@orders'); 			#企业订单订购记录
             $api->get('/stocks','UserController@stocks'); 			#根据token获取企业流量包库存
 
-
             //企业调用接口
             $api->post('/orderBuy','ForeignController@orderBuy'); 		#使用流量
             $api->get('/qOrder','ForeignController@queryOrder'); 		#使用流量
-
-
 
             //流量平台给的接口 公共接口
             $api->get('/lxStock','CommonController@lxStock'); 			#lx库存
@@ -225,12 +220,8 @@ $api->version('v1', function ($api) {
             $api->get('/getAgents','CommonController@getAgents'); 		#地区接口
 			$api->get('/getSmsCode','CommonController@getSmsCode');     #获取短信
 
-
-
             //bannerl图
             $api->get('/banner','BannerController@index'); #获取banner
-
-
 
 			//商品
             $api->get('/product/getProductsByAgent','ProductController@getProductsByAgent');  #根据代理商id获取流量包

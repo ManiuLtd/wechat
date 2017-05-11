@@ -70,7 +70,7 @@ class WechatController extends Controller
            $url = $_COOKIE['url'];
         }
 
-      
+
         setcookie("userinfo", $userinfo,time()+3600,'/','ana51.com');
         return redirect($url);
 
