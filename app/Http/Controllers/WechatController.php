@@ -63,9 +63,7 @@ class WechatController extends Controller
         $app = new Application($options);
         $oauth = $app->oauth;
         $user = $oauth->user();
-
-        dd($user);
-
+        
         $userinfo = $user->toJson();
 
         if (isset($_COOKIE["url"])){
