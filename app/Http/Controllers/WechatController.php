@@ -78,12 +78,12 @@ class WechatController extends Controller
 
     public function oauth(Request $request)
     {
-//        if($request->url){
-//            setcookie("url", $request->url,time()+3600,'/','ana51.com');
-//        }else{
-//            echo '请输入url';
-//            return false;
-//        }
+        if($request->url){
+            setcookie("url", $request->url,time()+3600,'/','ana51.com');
+        }else{
+            echo '请输入url';
+            return false;
+        }
         $options = weOption();
         $app = new Application($options);
         return $response = $app->oauth->scopes(['snsapi_userinfo'])->redirect();

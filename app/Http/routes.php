@@ -247,11 +247,19 @@ $api->version('v1', function ($api) {
 			$api->any('/wxapi/cardColors','WxController@cardColors');  //获取卡券颜色
 			$api->any('/wxapi/addCard','WxController@addCard');  //创建卡券
 			$api->any('/wxapi/cardQrcode','WxController@cardQrcode');  //创建卡券
+			$api->any('/wxapi/cardDelete','WxController@cardDelete');  //删除卡券
+			$api->any('/wxapi/cardDisable','WxController@cardDisable');  //卡券失效
 			$api->any('/wxapi/cardWhitelist','WxController@cardWhitelist');  //创建卡券测试白名单
 			$api->any('/wxapi/cardInfo','WxController@cardInfo');  //查看卡券详情
+			$api->any('/wxapi/cardList','WxController@cardList');  //批量查询卡列表
 			$api->any('/wxapi/increaseStock','WxController@increaseStock');  //卡券增加库存
 			$api->any('/wxapi/reduceStock','WxController@reduceStock');  //卡券减少库存
 			$api->any('/wxapi/createLandingPage','WxController@createLandingPage');  //卡券货架
+			$api->any('/wxapi/consume','WxController@consume');  //核销Code接口
+			$api->any('/wxapi/getUserCards','WxController@getUserCards');  //获取用户已领取卡券接口
+			$api->any('/wxapi/decryptCode','WxController@decryptCode');  //获取用户已领取卡券接口
+			$api->any('/wxapi/getCategories','WxController@getCategories');  //卡券开放类目查询接口
+			$api->any('/wxapi/getHtml','WxController@getHtml');  //图文消息群发卡券
 
 		});
         

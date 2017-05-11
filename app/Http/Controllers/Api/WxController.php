@@ -419,7 +419,7 @@ class WxController extends Controller
                 'quantity' => '500', //自定义code时设置库存为0
             ],
             "center_title" => "立即使用",
-            "center_url" => "www.qq.com",
+            "center_url" => "http://lx.ana51.com/toC/index.html",
 
         ];
         $especial = [
@@ -520,9 +520,9 @@ class WxController extends Controller
 
         $card = $app->card;
 
-        $usernames = ['o0a3GwxicRXcsX4EDVF25yG-3_sg'];
-        $result = $card->setTestWhitelistByUsername($usernames);
-
+        // by openid
+        $openids = ['o0a3GwxicRXcsX4EDVF25yG-3_sg'];
+        $result = $card->setTestWhitelist($openids);
 
         return ['status' => $result];
 
@@ -574,6 +574,81 @@ class WxController extends Controller
         return ['status' => $result];
 
     }
+
+    /**
+     * @SWG\Get(path="/wxapi/cardList",
+     *   tags={"微信"},
+     *   summary="批量查询卡列表",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *  @SWG\Parameter(
+     *     name="$offset",
+     *     in="query",
+     *     description="$offset",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *  @SWG\Parameter(
+     *     name="$count",
+     *     in="query",
+     *     description="$count",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function cardList(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $offset      = $request->offset;
+        $count       = $request->count;
+        //CARD_STATUS_NOT_VERIFY,待审核；
+        //CARD_STATUS_VERIFY_FAIL,审核失败；
+        //CARD_STATUS_VERIFY_OK，通过审核；
+        //CARD_STATUS_USER_DELETE，卡券被商户删除；
+        //CARD_STATUS_DISPATCH，在公众平台投放过的卡券；
+        $statusList = 'CARD_STATUS_VERIFY_OK';
+        $result = $card->lists($offset, $count, $statusList);
+
+
+        return ['status' => $result];
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @SWG\Get(path="/wxapi/increaseStock",
@@ -724,6 +799,341 @@ class WxController extends Controller
         return ['status' => $result];
 
     }
+
+    /**
+     * @SWG\Get(path="/wxapi/consume",
+     *   tags={"微信"},
+     *   summary="核销Code接口",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *  @SWG\Parameter(
+     *     name="cardId",
+     *     in="query",
+     *     description="cardId",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *  @SWG\Parameter(
+     *     name="code",
+     *     in="query",
+     *     description="code",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function consume(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $result = $card->consume($request->code, $request->cardId);
+
+        return ['status' => $result];
+
+    }
+
+
+
+
+    /**
+     * @SWG\Get(path="/wxapi/getUserCards",
+     *   tags={"微信"},
+     *   summary="获取用户已领取卡券接口",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *  @SWG\Parameter(
+     *     name="openid",
+     *     in="query",
+     *     description="openid",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function getUserCards(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $openid  = $request->openid;
+        $cardId = ''; //卡券ID。不填写时默认查询当前appid下的卡券。
+        $result = $card->getUserCards($openid, $cardId);
+
+        return ['status' => $result];
+
+    }
+
+
+    /**
+ * @SWG\Get(path="/wxapi/decryptCode",
+ *   tags={"微信"},
+ *   summary="Code解码接口",
+ *   description="",
+ *   operationId="loginUser",
+ *   produces={"application/xml", "application/json"},
+ *  @SWG\Parameter(
+ *     name="encryptedCode",
+ *     in="query",
+ *     description="encryptedCode",
+ *     required=true,
+ *     type="string"
+ *   ),
+ *   @SWG\Response(
+ *     response=200,
+ *     description="successful operation",
+ *     @SWG\Schema(type="json"),
+ *     @SWG\Header(
+ *       header="X-Rate-Limit",
+ *       type="integer",
+ *       format="int32",
+ *       description="calls per hour allowed by the user"
+ *     ),
+ *     @SWG\Header(
+ *       header="X-Expires-After",
+ *       type="string",
+ *       format="date-time",
+ *       description="date in UTC when token expires"
+ *     )
+ *   )
+ * )
+ */
+    public function decryptCode(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $encryptedCode = $request->encryptedCode;
+        $result = $card->decryptCode($encryptedCode);
+
+        return ['status' => $result];
+
+    }
+
+    /**
+     * @SWG\Get(path="/wxapi/cardDelete",
+     *   tags={"微信"},
+     *   summary="删除卡券",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *  @SWG\Parameter(
+     *     name="cardId",
+     *     in="query",
+     *     description="cardId",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function cardDelete(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $cardId = $request->cardId;
+
+        $result = $card->delete($cardId);
+
+
+        return ['status' => $result];
+
+    }
+
+
+    /**
+     * @SWG\Get(path="/wxapi/cardDisable",
+     *   tags={"微信"},
+     *   summary="卡券失效",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *  @SWG\Parameter(
+     *     name="code",
+     *     in="query",
+     *     description="code",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function cardDisable(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $code = $request->code;
+        $cardId = '';
+        $result = $card->disable($code, $cardId);
+
+        return ['status' => $result];
+
+    }
+
+    /**
+     * @SWG\Get(path="/wxapi/getCategories",
+     *   tags={"微信"},
+     *   summary="卡券开放类目查询",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function getCategories(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+
+        $card = $app->card;
+
+        $result = $card->getCategories();
+
+        return ['status' => $result];
+
+    }
+
+    /**
+     * @SWG\Get(path="/wxapi/getHtml",
+     *   tags={"微信"},
+     *   summary="图文消息群发卡券",
+     *   description="",
+     *   operationId="loginUser",
+     *   produces={"application/xml", "application/json"},
+     *  @SWG\Parameter(
+     *     name="cardId",
+     *     in="query",
+     *     description="cardId",
+     *     required=true,
+     *     type="string"
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(type="json"),
+     *     @SWG\Header(
+     *       header="X-Rate-Limit",
+     *       type="integer",
+     *       format="int32",
+     *       description="calls per hour allowed by the user"
+     *     ),
+     *     @SWG\Header(
+     *       header="X-Expires-After",
+     *       type="string",
+     *       format="date-time",
+     *       description="date in UTC when token expires"
+     *     )
+     *   )
+     * )
+     */
+    public function getHtml(Request $request)
+    {
+        $options = weOption();
+        $app = new Application($options);
+        $card = $app->card;
+        $cardId = $request->cardId;
+        $result = $card->getHtml($cardId);
+
+        return ['status' => $result];
+
+    }
+
 
 
 }
