@@ -23,7 +23,7 @@
 	    $paramArr = array(
 	        'apikey' => config("yunpian.apikey"),
 	        'mobile' => $mobile,
-	        'text' => '【欢乐诵】您的验证码是'.$code
+	        'text' => '【量炫科技】您的验证码是'.$code
 	    );
 	    $param = '';
 	    foreach ($paramArr as $key => $value) {
