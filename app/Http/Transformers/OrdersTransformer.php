@@ -30,7 +30,7 @@ class OrdersTransformer extends TransformerAbstract
                     'stock' => $i->stock,
                     'price' => $i->price,
                     'total' => $i->price * $i->stock,
-                    'time' => $item->created_at->forma('M-d H:i')
+                    'time' => $item->created_at->format('M-d H:i')
                 ];
             }),
         ];
