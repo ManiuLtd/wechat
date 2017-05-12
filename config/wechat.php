@@ -33,7 +33,6 @@ return [
     
     /*
      * 日志配置
-     *
      * level: 日志级别，可选为：
      *                 debug/info/notice/warning/error/critical/alert/emergency
      * file：日志文件位置(绝对路径!!!)，要求可写权限
