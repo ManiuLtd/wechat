@@ -399,7 +399,8 @@ class UserController extends BaseController
     public function orders(Request $request)
     {
        $info = checkToken($request->token);
-         return ['info'=>$info];
+
+        return ['info'=>$info,'a'=>'bb'];
 
        $orders = Order::where('user_id',6)->paginate($request->per_page);;
        return $this->response->paginator($orders,new OrdersTransformer);
