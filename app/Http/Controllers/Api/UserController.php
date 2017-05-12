@@ -191,9 +191,19 @@ class UserController extends BaseController
     public function buy(Request $request)
     {   
         $order_num = orderNum();
+        $openid = $request->openid;
 
+        //商品价格
         $price = Good::findOrFail($request->good_id)->money;
-        $user = User::where('openid',$request->openid)->first();
+
+        //查找用户
+        $user = User::where('openid',$openid)->first();
+
+        //判断用户是否存在
+        if(!$user){
+            $user = User::create(['openid'=>$openid]);
+        }
+
         $porder = $user->porders()->create([
             'order_num' => $order_num,
             'phone' => $request->phone,
