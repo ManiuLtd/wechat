@@ -453,9 +453,9 @@ class UserController extends BaseController
      * )
      */
     public function stocks(Request $request)
-    {   
-               
-        $user = User::findOrFail(6);
+    {
+        $info = checkToken($request->token);
+        $user = User::findOrFail($info['uid']);
         $agent_id = $request->agent_id;
         $saleType = $request->saleType;
 
