@@ -30,16 +30,25 @@ class UsersRepository
 			return $cinfo;
 		}
 
-		//如果openid已存在  
+		//如果openid已存在   在c端购买过流量
 		$user = User::where('openid',$request->openid)->first();
 
-		if($user->phone){ 
-			return ['message' => '该微信号已注册过公司','status'=> 6];
-		}else{  //因为在c端购买过流量 手机号为空 公司名也为家  所以有2种身份
-			$user->phone = $request->phone;
-			$user->name = $request->name;
+		if($user){
+			if($user->phone){
+				return ['message' => '该微信号已注册过公司','status'=> 6];
+			}else{  //因为在c端购买过流量 手机号为空 公司名也为空  所以有2种身份
+				$user->phone = $request->phone;
+				$user->name = $request->name;
+				$user->save();
+			}
+		}else{ //新创一个账号
+			$user = User::create([
+				'openid'=> $request->openid,
+				'name' => $request->name,
+				'phone' => $request->phone
+			]);
 		}
-			
+
 		$token = createToken($user->id);
 		return ['message' => '注册成功','status'=> 0,'token' =>$token];
 	}
