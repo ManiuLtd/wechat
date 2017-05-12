@@ -230,11 +230,10 @@ $api->version('v1', function ($api) {
 			//微信相关
 			$api->any('/wxapi/getMenu','WxController@getMenu');  //获取菜单
 			$api->any('/wxapi/setMenu','WxController@setMenu');  //设置菜单
-			$api->any('/wxapi/getUser','WxController@getUser');  //获取用户
-			$api->any('/wxapi/getUserList','WxController@getUserList');  //获取用户列表
-			$api->any('/wxapi/setRemark','WxController@setRemark');  //设置用户备注
-			$api->any('/wxapi/getUserGroupId','WxController@getUserGroupId');  //获取用户分组id
-			$api->any('/wxapi/blacklist','WxController@blacklist');  //获取黑名单
+
+
+
+
 			$api->any('/wxapi/cardColors','WxController@cardColors');  //获取卡券颜色
 			$api->any('/wxapi/addCard','WxController@addCard');  //创建卡券
 			$api->any('/wxapi/cardQrcode','WxController@cardQrcode');  //创建卡券
@@ -251,6 +250,64 @@ $api->version('v1', function ($api) {
 			$api->any('/wxapi/decryptCode','WxController@decryptCode');  //获取用户已领取卡券接口
 			$api->any('/wxapi/getCategories','WxController@getCategories');  //卡券开放类目查询接口
 			$api->any('/wxapi/getHtml','WxController@getHtml');  //图文消息群发卡券
+
+			//微信用户相关
+			$api->any('/wxUserApi/getUser','WxUserApiController@getUser');  //根据openid获取用户
+			$api->any('/wxUserApi/getUserList','WxUserApiController@getUserList');  //获取用户列表
+			$api->any('/wxUserApi/setRemark','WxUserApiController@setRemark');  //设置用户备注
+			$api->any('/wxUserApi/getUserGroupId','WxUserApiController@getUserGroupId');  //获取用户分组id
+			$api->any('/wxUserApi/blacklist','WxUserApiController@blacklist');  //获取黑名单
+			$api->any('/wxUserApi/lists','WxUserApiController@lists');  //获取所有分组
+			$api->any('/wxUserApi/create','WxUserApiController@create');  //创建分组
+			$api->any('/wxUserApi/update','WxUserApiController@update');  //创建分组
+			$api->any('/wxUserApi/delete','WxUserApiController@delete');  //删除分组
+			$api->any('/wxUserApi/moveUser','WxUserApiController@moveUser');  //移动单个用户到指定分组
+			$api->any('/wxUserApi/moveUsers','WxUserApiController@moveUsers');  //批量移动用户到指定分组
+
+			//素材
+			$api->any('/WxMediaApi/uploadImage','WxMediaApiController@uploadImage');  //上传图片
+			$api->any('/WxMediaApi/uploadImageTmp','WxMediaApiController@uploadImageTmp');  //上传图片Tmp
+			$api->any('/WxMediaApi/uploadVoice','WxMediaApiController@uploadVoice');  //上传音频
+			$api->any('/WxMediaApi/uploadVoiceTmp','WxMediaApiController@uploadVoiceTmp');  //上传音频 Tmp
+			$api->any('/WxMediaApi/uploadVideo','WxMediaApiController@uploadVideo');  //上传音频
+			$api->any('/WxMediaApi/uploadVideoTmp','WxMediaApiController@uploadVideoTmp');  //上传音频Tmp
+			$api->any('/WxMediaApi/uploadThumb','WxMediaApiController@uploadThumb');  //上传缩略图
+			$api->any('/WxMediaApi/uploadThumbTmp','WxMediaApiController@uploadThumbTmp');  //上传缩略图Tmp
+			$api->any('/WxMediaApi/uploadArticle','WxMediaApiController@uploadArticle');  //上传永久图文
+			$api->any('/WxMediaApi/get','WxMediaApiController@get');  //获取永久素材
+			$api->any('/WxMediaApi/lists','WxMediaApiController@lists');  //获取永久素材列表
+			$api->any('/WxMediaApi/stats','WxMediaApiController@stats');  //获取素材计数
+			$api->any('/WxMediaApi/delete','WxMediaApiController@delete');  //删除永久素材；
+			$api->any('/WxMediaApi/getStream','WxMediaApiController@getStream');  //获取临时素材内容；
+			$api->any('/WxMediaApi/download','WxMediaApiController@download');  //下载临时素材到本地
+
+
+			//用户标签
+			$api->any('/WxTagApi/lists','WxTagApiController@lists');  //获取所有标签
+			$api->any('/WxTagApi/create','WxTagApiController@create');  //创建标签
+			$api->any('/WxTagApi/update','WxTagApiController@update');  //编辑标签
+			$api->any('/WxTagApi/delete','WxTagApiController@delete');  //delete
+			$api->any('/WxTagApi/userTags','WxTagApiController@userTags');  //获取指定 openid 用户身上的标签
+			$api->any('/WxTagApi/usersOfTag','WxTagApiController@usersOfTag');  //获取标签下粉丝列表
+			$api->any('/WxTagApi/batchTagUsers','WxTagApiController@batchTagUsers');  //批量为用户打标签
+			$api->any('/WxTagApi/batchUntagUsers','WxTagApiController@batchUntagUsers');  //批量为用户取消标签
+
+			//模板消息
+			$api->any('/WxNoticeApi/getIndustry','WxNoticeApiController@getIndustry');  //返回所有支持的行业列表
+			$api->any('/WxNoticeApi/setIndustry','WxNoticeApiController@setIndustry');  //修改账号所属行业
+			$api->any('/WxNoticeApi/addTemplate','WxNoticeApiController@addTemplate');  //添加模板并获取模板ID
+			$api->any('/WxNoticeApi/send','WxNoticeApiController@send');  //发送模板消息, 返回消息ID；
+			$api->any('/WxNoticeApi/getPrivateTemplates','WxNoticeApiController@getPrivateTemplates');  //getPrivateTemplates() 获取所有模板列表
+			$api->any('/WxNoticeApi/deletePrivateTemplate','WxNoticeApiController@deletePrivateTemplate');  //deletePrivateTemplate($templateId)
+
+			//二维码
+
+			$api->any('/WxQrcodeApi/temporary','WxQrcodeApiController@temporary');  //创建临时二维码
+			$api->any('/WxQrcodeApi/forever','WxQrcodeApiController@forever');  //创建永久二维码
+			$api->any('/WxQrcodeApi/url','WxQrcodeApiController@url');  //获取二维码网址
+			$api->any('/WxQrcodeApi/content','WxQrcodeApiController@content');  //获取二维码内容
+
+
 
 		});
         

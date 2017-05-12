@@ -23,7 +23,7 @@ class OrdersTransformer extends TransformerAbstract
             'details' => $item->details->map(function($i,$k) use($item){
                 return [
                     'name' => $i->good->product->name,
-                    'type' => $i->good->saleType ? '国内' : '省内',
+                    'type' => $i->good->saleType ? '全国' : '省内',
                     'agent' => $i->good->agent->name,
                     'usedCnt' => $i->usedCnt,
                     'unUsedCnt' => $i->unUsedCnt,
